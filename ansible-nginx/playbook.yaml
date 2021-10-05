@@ -1,0 +1,36 @@
+---
+
+    - hosts: nginx
+      # vars:
+      #   - local_cert_zip: /Users/waok2hurricane/Desktop/desktop/certs-august-2021.tar.gz
+      #   - remote_zip: /home/ubuntu/certs-august-2021.tar.gz
+      #   - remote_name: certs-august-2021.tar.gz
+      #   - remote_folder: certs-august-2021
+      remote_user: ubuntu
+      become: yes
+
+      tasks:
+       - name: Update apt repo and cache
+         apt: update_cache=yes cache_valid_time=36000
+
+       - name: Upgrade all packages on servers
+         apt: upgrade=dist force_apt_get=yes
+        
+      #  - name: update/install nginx to the latest 
+      #    apt: name=nginx state=latest
+
+       - name: start nginx
+         service:
+           name: nginx
+           state: started
+
+       - name: enable  nginx
+         service:
+           name: nginx
+           enabled: yes
+ 
+
+
+
+##ansible-playbook -i inventory.yaml --private-key ~/.ssh/waok2.cer playbook.yaml
+##ansible-playbook -i inventory.yaml  playbook.yaml
