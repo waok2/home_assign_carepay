@@ -17,6 +17,8 @@ We use Terraform to spin the EC2 instance and Ansible to install Nginx and confi
 ```bash 
 terraform apply 
 ``` 
+note; i have commented out a part on attaching  a data disk, if it is needed the block can be uncommented.
+
 3. From the Terraform state file {```terraform.tfstate ```} get the elastic IP and update it in the Ansible inventory file {```ansible-nginx/inventory.yaml```}
 4. Run the Ansible playbook using the command below 
 ```bash 
