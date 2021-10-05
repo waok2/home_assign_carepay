@@ -2,5 +2,6 @@ all:
   hosts:
   children:
     nginx:
-      hosts: 
-        50.17.100.180:
+      hosts:
+      ##update server ip here  
+        54.156.255.129:
