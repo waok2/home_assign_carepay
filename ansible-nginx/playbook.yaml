@@ -80,4 +80,4 @@
            state: reloaded
 
 ##run the ansible playbook     
-##ansible-playbook -i inventory.yaml  playbook.yaml
+##ansible-playbook -i ansible-nginx/inventory.yaml  ansible-nginx/playbook.yaml

@@ -4,4 +4,4 @@ all:
     nginx:
       hosts:
       ##update server ip here  
-        54.156.255.129:
+        34.198.130.221:
