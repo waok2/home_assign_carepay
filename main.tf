@@ -61,12 +61,13 @@ resource "aws_security_group" "carepay_nginx" {
 
 ## create EC2 instance
 resource "aws_instance" "carepay-nginx" {
-  ##ami           = "ami-0747bdcabd34c712a"
+ ##ubuntu server ami
   ami           = "ami-09e67e426f25ce0d7"
   
   key_name = var.key_name
   instance_type = var.instance_type
   security_groups= [ "carepay_nginx"]
+  ##uncomment if you want to specify availability zone 
   #availability_zone = var.aws_availability_zone
   
 
@@ -77,6 +78,7 @@ resource "aws_instance" "carepay-nginx" {
   }
 }
 
+### uncomment if you want to create a data disk attached to ec2
 # ##creating a data disk
 # resource "aws_ebs_volume" "carepay-data-disk" {
 #   availability_zone = var.aws_availability_zone
