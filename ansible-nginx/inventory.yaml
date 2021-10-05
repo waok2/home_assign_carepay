@@ -1,0 +1,7 @@
+all:
+  hosts:
+  children:
+    nginx:
+      hosts:
+      ##update server ip here  
+        54.156.255.129:

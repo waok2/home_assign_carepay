@@ -44,6 +44,13 @@ resource "aws_security_group" "carepay_nginx" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  egress {
+  from_port   = 0
+  to_port     = 0
+  protocol    = "-1"
+  cidr_blocks = ["0.0.0.0/0"]
+}
+
  
 
   tags= {
@@ -54,13 +61,14 @@ resource "aws_security_group" "carepay_nginx" {
 
 ## create EC2 instance
 resource "aws_instance" "carepay-nginx" {
-  ##ami           = "ami-0747bdcabd34c712a"
+ ##ubuntu server ami
   ami           = "ami-09e67e426f25ce0d7"
   
   key_name = var.key_name
   instance_type = var.instance_type
   security_groups= [ "carepay_nginx"]
-  availability_zone = var.aws_availability_zone
+  ##uncomment if you want to specify availability zone 
+  #availability_zone = var.aws_availability_zone
   
 
   tags = {
@@ -70,6 +78,7 @@ resource "aws_instance" "carepay-nginx" {
   }
 }
 
+### uncomment if you want to create a data disk attached to ec2
 # ##creating a data disk
 # resource "aws_ebs_volume" "carepay-data-disk" {
 #   availability_zone = var.aws_availability_zone

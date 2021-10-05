@@ -1,0 +1,83 @@
+---
+
+    - hosts: nginx
+      ## uncomment below if you want to use the self signed certificate for https, also update the values .
+      # vars:
+      #   - server_hostname: "54.156.255.129"
+      #   - key_size: 4096
+      #   - key_type: RSA
+      #   - country_name: KE
+      #   - email_address: admin@home-assignment.com
+      #   - organization_name: Home-Assignment
+  
+      remote_user: ubuntu
+      become: yes
+
+      tasks:
+       - name: Update apt repo and cache
+         apt: update_cache=yes cache_valid_time=36000
+      ## uncomment below if you want to upgrade all the packages 
+      #  - name: Upgrade all packages on servers
+      #    apt: upgrade=dist force_apt_get=yes
+        
+
+       - name: update/install nginx to the latest 
+         apt: name=nginx state=latest
+
+     
+       - name: start nginx
+         service:
+           name: nginx
+           state: started
+# #### uncomment below if you want to use a self signed certificate ensure to update the variable section
+
+#        - name: Create certificate directory 
+#          ansible.builtin.file:
+#            path: /etc/nginx/ssl/
+#            state: directory
+
+#        - name: Generate an OpenSSL private key
+#          openssl_privatekey:
+#             path: "/etc/nginx/ssl/{{ server_hostname }}_privkey.pem"
+#             size: "{{ key_size }}"
+#             type: "{{ key_type }}"
+#             backup: yes
+#        - name: Generate an OpenSSL Certificate Signing Request with Subject information
+#          openssl_csr:
+#             path: "/etc/nginx/ssl/{{ server_hostname }}.csr"
+#             privatekey_path: "/etc/nginx/ssl/{{ server_hostname }}_privkey.pem"
+#             country_name: "{{ country_name }}"
+#             organization_name: "{{ organization_name }}"
+#             email_address: "{{ email_address }}"
+#             common_name: "{{ server_hostname }}"
+#        - name: Generate a Self Signed OpenSSL certificate
+#          openssl_certificate:
+#             path: "/etc/nginx/ssl/{{ server_hostname }}_cert.pem"
+#             privatekey_path: "/etc/nginx/ssl/{{ server_hostname }}_privkey.pem"
+#             csr_path: "/etc/nginx/ssl/{{ server_hostname }}.csr"
+#             provider: selfsigned
+
+
+# #######
+
+
+
+
+       - name: copy the nginx config 
+         copy:
+          src: ./nginx-files/carepaysite.conf
+          dest: /etc/nginx/sites-enabled/default
+
+      
+       - name: copy the site  file
+         copy:
+          src: ./nginx-files/index.html
+          dest: /var/www/html/index.html
+
+       - name: reload nginx configs 
+         service:
+           name: nginx
+           state: reloaded
+
+##run the ansible playbook     
+##ansible-playbook -i inventory.yaml  playbook.yaml
