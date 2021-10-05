@@ -15,6 +15,8 @@ We use Terraform to spin the EC2 instance and Ansible to install Nginx and confi
 ```
 2. use the command below to provision the infrastructure  
 ```bash 
+terraform init
+
 terraform apply 
 ``` 
 note; i have commented out a part on attaching  a data disk, if it is needed the block can be uncommented.
