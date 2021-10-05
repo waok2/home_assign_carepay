@@ -44,6 +44,13 @@ resource "aws_security_group" "carepay_nginx" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  egress {
+  from_port   = 0
+  to_port     = 0
+  protocol    = "-1"
+  cidr_blocks = ["0.0.0.0/0"]
+}
+
  
 
   tags= {
@@ -60,7 +67,7 @@ resource "aws_instance" "carepay-nginx" {
   key_name = var.key_name
   instance_type = var.instance_type
   security_groups= [ "carepay_nginx"]
-  availability_zone = var.aws_availability_zone
+  #availability_zone = var.aws_availability_zone
   
 
   tags = {
