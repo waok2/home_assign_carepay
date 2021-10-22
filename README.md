@@ -1,4 +1,4 @@
-# home_assign_carepay
+# simple_ec2_terraform_nginx_ansible
 
 We use Terraform to spin the EC2 instance and Ansible to install Nginx and configure it.
 
